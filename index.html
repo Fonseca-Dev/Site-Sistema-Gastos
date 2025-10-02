@@ -1,34 +1,123 @@
-<!doctype html>
-<html>
-<head><meta charset="utf-8"><title>Login</title></head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Sistema de Gastos</title>
+  <style>
+    /* Fundo com imagem full screen */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://github.com/Fonseca-Dev/Site-Sistema-Gastos/blob/main/Imagens/tela_fundo_login.png') no-repeat center center;
+      background-size: cover;
+    }
+
+    /* Card centralizado */
+    .login-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Inputs estilizados */
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: #007BFF;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0,123,255,0.5);
+    }
+
+    /* Botão estilizado */
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Mensagem de erro */
+    .error-msg {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
 <body>
-  <h1>Login</h1>
-  <form id="loginForm">
-    <input id="email" type="email" placeholder="Email" required>
-    <input id="senha" type="password" placeholder="Senha" required>
-    <button type="submit">Entrar</button>
-  </form>
+  <div class="login-card">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input id="email" type="email" placeholder="Email" required>
+      <input id="senha" type="password" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+      <p class="error-msg" id="errorMsg">Login falhou!</p>
+    </form>
+  </div>
 
   <script>
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    const loginForm = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      errorMsg.style.display = "none";
+
       const email = document.getElementById("email").value;
       const senha = document.getElementById("senha").value;
 
-      const res = await fetch("https://sistema-gastos-694972193726.southamerica-east1.run.app/usuarios/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // 🔑 necessário se backend usar cookie/session
-        body: JSON.stringify({ email, senha }) // 🔥 agora bate com o DTO
-      });
+      try {
+        const res = await fetch("https://sistema-gastos-694972193726.southamerica-east1.run.app/usuarios/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, senha })
+        });
 
-      if (res.ok) {
-        const data = await res.json(); // se seu backend retornar algum token ou id
-        localStorage.setItem("usuarioLogado", JSON.stringify(data));
-        window.location.href = "home.html";
-      } else {
-        const msg = await res.text();
-        alert("Login falhou: " + msg);
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem("usuarioLogado", JSON.stringify(data));
+          window.location.href = "home.html";
+        } else {
+          errorMsg.textContent = await res.text();
+          errorMsg.style.display = "block";
+        }
+      } catch (err) {
+        errorMsg.textContent = "Erro ao conectar com o servidor!";
+        errorMsg.style.display = "block";
+        console.error(err);
       }
     });
   </script>
