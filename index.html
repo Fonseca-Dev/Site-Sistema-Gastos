@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Sistema de Gastos</title>
   <style>
-    body {
+    /* Reset básico */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       background: url('Imagens/tela_fundo_login.png') no-repeat center center fixed;
       background-size: cover;
@@ -15,45 +20,68 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      padding: 20px;
     }
 
     .login-card {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 40px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      width: 320px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-5px);
     }
 
     .login-card h1 {
-      margin-bottom: 24px;
+      margin-bottom: 1.5rem;
       color: #333;
+      font-size: 1.8rem;
     }
 
     .login-card input {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 16px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1rem;
     }
 
     .login-card button {
       width: 100%;
-      padding: 12px;
+      padding: 0.75rem;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
     .login-card button:hover {
       background-color: #45a049;
+    }
+
+    /* Responsivo para telas pequenas */
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 1.5rem;
+      }
+
+      .login-card h1 {
+        font-size: 1.5rem;
+      }
+
+      .login-card input, .login-card button {
+        font-size: 0.95rem;
+      }
     }
   </style>
 </head>
@@ -67,7 +95,6 @@
     </form>
   </div>
 
-  <!-- Link para o JS -->
   <script src="js/script.js"></script>
 </body>
 </html>
