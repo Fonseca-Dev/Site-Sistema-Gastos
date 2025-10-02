@@ -15,7 +15,7 @@
       const email = document.getElementById("email").value;
       const senha = document.getElementById("senha").value;
 
-      const res = await fetch("http://localhost:8080/usuarios/login", {
+      const res = await fetch("https://sistema-gastos-694972193726.southamerica-east1.run.app/usuarios/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // 🔑 necessário se backend usar cookie/session
