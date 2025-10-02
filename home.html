@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Sistema de Gastos</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    button { padding: 8px 16px; margin-top: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Bem-vindo ao Sistema de Gastos</h1>
+  <p id="usuarioInfo"></p>
+  <button id="logoutBtn">Sair</button>
+
+  <script>
+    // Verifica se o usuário está logado
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+    if (!usuario) {
+      alert("Você precisa estar logado!");
+      window.location.href = "index.html";
+    } else {
+      // Mostra alguma informação do usuário (ex: email)
+      document.getElementById("usuarioInfo").textContent = `Logado como: ${usuario.email || usuario.nome || 'Usuário'}`;
+    }
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

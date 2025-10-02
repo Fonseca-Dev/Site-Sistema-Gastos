@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Login</title></head>
+<body>
+  <h1>Login</h1>
+  <form id="loginForm">
+    <input id="email" type="email" placeholder="Email" required>
+    <input id="senha" type="password" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+  </form>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+
+      const res = await fetch("https://sistema-gastos-694972193726.southamerica-east1.run.app/usuarios/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // 🔑 necessário se backend usar cookie/session
+        body: JSON.stringify({ email, senha }) // 🔥 agora bate com o DTO
+      });
+
+      if (res.ok) {
+        const data = await res.json(); // se seu backend retornar algum token ou id
+        localStorage.setItem("usuarioLogado", JSON.stringify(data));
+        window.location.href = "home.html";
+      } else {
+        const msg = await res.text();
+        alert("Login falhou: " + msg);
+      }
+    });
+  </script>
+</body>
+</html>
